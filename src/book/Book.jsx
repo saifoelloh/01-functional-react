@@ -8,6 +8,12 @@ function Book(props) {
     padding: '50px',
     backgroundColor: 'lightblue'
   }
+  const [btn, setBtn] = useState(true)
+  const card = <div style={kotak}>
+            <p>Nama = {name}</p>
+            <p>Umur = {age}</p>
+            <p>Email = {email}</p>
+          </div>
 
   return (
     <div>
@@ -15,11 +21,10 @@ function Book(props) {
       <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="John Smith" />
       <input type="number" value={age} onChange={e => setAge(e.target.value)} placeholder="25" />
       <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="foo@mail.com" />
-      <div style={kotak}>
-        <p>Nama = {name}</p>
-        <p>Umur = {age}</p>
-        <p>Email = {email}</p>
-      </div>
+      <button onClick={e => setBtn(!btn) }>
+        tekan
+      </button>
+      { btn ? 'foo' : card }
     </div>
   )
 }
