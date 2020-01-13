@@ -5,30 +5,24 @@ function Book(props) {
   const [name, setName] = useState('')
   const [age, setAge] = useState(0)
   const [email, setEmail] = useState('')
+  const [users, setUsers] = useState([])
+  const [loading, setLoading] = useState(true)
   const kotak = {
-    padding: '50px',
-    backgroundColor: 'lightblue',
+    paddingTop: '10px',
   }
   const [btn, setBtn] = useState(true)
-  const card = (
-    <div style={kotak}>
-      <p>Nama = {name}</p>
-      <p>Umur = {age}</p>
-      <p>Email = {email}</p>
-    </div>
-  )
 
   useEffect(() => {
-    setInterval(() => {
-      Axios.get('https://jsonplaceholder.typicode.com/users')
-        .then((res) => {
-          const datum = res.data[0]
-          setName(datum.name)
-          setAge(datum.id)
-          setEmail(datum.email)
-        })
-        .catch(console.error)
-    }, 5000)
+    if (loading) {
+      setInterval(() => {
+        Axios.get('https://jsonplaceholder.typicode.com/users')
+          .then((res) => {
+            setUsers(res.data)
+            setLoading(!loading)
+          })
+          .catch(console.error)
+      }, 5000)
+    }
   })
 
   return (
@@ -53,7 +47,17 @@ function Book(props) {
         placeholder="foo@mail.com"
       />
       <button onClick={(e) => setBtn(!btn)}>tekan</button>
-      {btn ? 'foo' : card}
+      {loading
+        ? 'Ambil data mas bro!'
+        : users.map((datum, index) => {
+            return (
+              <div key={index} style={kotak}>
+                <p>Name : {datum.name}</p>
+                <p>Email : {datum.email}</p>
+                <p>Phone : {datum.phone}</p>
+              </div>
+            )
+          })}
     </div>
   )
 }
