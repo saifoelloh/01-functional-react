@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import Axios from 'axios'
+import axios from 'axios'
 
 function Book(props) {
-  const [name, setName] = useState('')
-  const [age, setAge] = useState(0)
-  const [email, setEmail] = useState('')
+  const name = useFormInput('')
+  const phone = useFormInput('')
+  const email = useFormInput('')
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const kotak = {
@@ -13,39 +13,21 @@ function Book(props) {
   const [btn, setBtn] = useState(true)
 
   useEffect(() => {
-    if (loading) {
-      setInterval(() => {
-        Axios.get('https://jsonplaceholder.typicode.com/users')
-          .then((res) => {
-            setUsers(res.data)
-            setLoading(!loading)
-          })
-          .catch(console.error)
-      }, 5000)
-    }
-  })
+    axios
+      .get('https://jsonplaceholder.typicode.com/users')
+      .then((res) => {
+        setUsers(res.data)
+        setLoading(false)
+      })
+      .catch(console.error)
+  }, [])
 
   return (
     <div>
       <h1>Form | {props.title}</h1>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="John Smith"
-      />
-      <input
-        type="number"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-        placeholder="25"
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="foo@mail.com"
-      />
+      <input type="text" placeholder="John Smith" {...name} />
+      <input type="Phone Number" placeholder="xxx-xxx-xxx" {...phone} />
+      <input type="email" placeholder="foo@mail.com" {...email} />
       <button onClick={(e) => setBtn(!btn)}>tekan</button>
       {loading
         ? 'Ambil data mas bro!'
@@ -60,6 +42,15 @@ function Book(props) {
           })}
     </div>
   )
+}
+
+function useFormInput(initialValue) {
+  const [value, setValue] = useState(initialValue)
+  function onChange(e) {
+    setValue(e.target.value)
+  }
+
+  return {value, onChange}
 }
 
 export default Book
