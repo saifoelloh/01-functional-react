@@ -10,7 +10,6 @@ function Book(props) {
   const kotak = {
     paddingTop: '10px',
   }
-  const [btn, setBtn] = useState(true)
 
   useEffect(() => {
     axios
@@ -22,13 +21,27 @@ function Book(props) {
       .catch(console.error)
   }, [])
 
+  const onSubmit = () => {
+    const params = {
+      name,
+      phone,
+      email,
+    }
+    axios
+      .post('https://jsonplaceholder.typicode.com/users', params)
+      .then((res) => {
+        console.log({res, msg: 'success'})
+      })
+      .catch((e) => console.error({e}))
+  }
+
   return (
     <div>
-      <h1>Form | {props.title}</h1>
+      <h1>Daftar Buku</h1>
       <input type="text" placeholder="John Smith" {...name} />
       <input type="Phone Number" placeholder="xxx-xxx-xxx" {...phone} />
       <input type="email" placeholder="foo@mail.com" {...email} />
-      <button onClick={(e) => setBtn(!btn)}>tekan</button>
+      <button onClick={() => onSubmit()}>submit</button>
       {loading
         ? 'Ambil data mas bro!'
         : users.map((datum, index) => {
