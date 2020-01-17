@@ -1,5 +1,7 @@
-import React, {useEffect} from 'react'
+import React, {Fragment, useEffect} from 'react'
 import {Link} from 'react-router-dom'
+import {AppBar, Button, Toolbar, IconButton} from '@material-ui/core'
+import {Book, Home, Group} from '@material-ui/icons'
 
 function DefaultLayout(props) {
   useEffect(() => {
@@ -7,22 +9,29 @@ function DefaultLayout(props) {
     console.log({page})
   })
   return (
-    <div>
-      <header>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/book">Book</Link>
-          </li>
-          <li>
-            <Link to="/user">User</Link>
-          </li>
-        </ul>
-      </header>
+    <Fragment>
+      <AppBar position="static">
+        <Toolbar>
+          <Link to="/">
+            <Button>
+              <Home />
+              Home
+            </Button>
+          </Link>
+          <Link to="/book">
+            <Button>
+              <Book /> Book
+            </Button>
+          </Link>
+          <Link to="/user">
+            <Button>
+              <Group /> User
+            </Button>
+          </Link>
+        </Toolbar>
+      </AppBar>
       <main>{props.page}</main>
-    </div>
+    </Fragment>
   )
 }
 
