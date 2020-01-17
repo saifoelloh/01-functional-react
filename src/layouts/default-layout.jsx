@@ -1,7 +1,7 @@
+import {AppBar, Button, Toolbar} from '@material-ui/core'
+import {Book, Group, Home} from '@material-ui/icons'
 import React, {Fragment, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {AppBar, Button, Toolbar, IconButton} from '@material-ui/core'
-import {Book, Home, Group} from '@material-ui/icons'
 
 function DefaultLayout(props) {
   useEffect(() => {
